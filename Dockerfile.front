@@ -1,0 +1,10 @@
+FROM node
+WORKDIR /app/frontend
+COPY devops-challenge/frontend/ .
+RUN yarn install \
+    && yarn build
+
+FROM httpd:2.4
+COPY --from=0 /app/frontend/dist/* /usr/local/apache2/htdocs
+COPY conf/httpd.conf /usr/local/apache2/conf
+
