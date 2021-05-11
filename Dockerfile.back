@@ -1,8 +1,8 @@
-FROM maven
+FROM maven as builder
 WORKDIR /app/api
 COPY devops-challenge/api/ /app/api
 RUN mvn -e package
 
 FROM java
-COPY --from=0 /app/api/target/*.jar /usr/bin/app.jar
+COPY --from=builder /app/api/target/*.jar /usr/bin/app.jar
 CMD ["java -jar /usr/bin/app.jar"]  
