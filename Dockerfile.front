@@ -1,10 +1,11 @@
-FROM node as builder
+# stage 1: build stage
+FROM node:10 as builder
 WORKDIR /app/frontend
 COPY devops-challenge/frontend/ .
 RUN yarn install \
     && yarn build
 
+# stage 2: release stage
 FROM httpd:2.4
 COPY --from=builder /app/frontend/dist/* /usr/local/apache2/htdocs
 COPY conf/httpd.conf /usr/local/apache2/conf
-
