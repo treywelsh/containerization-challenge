@@ -20,7 +20,7 @@ ENV MAVEN_CONFIG "${USER_HOME_DIR}/.m2"
 
 # application building
 COPY devops-challenge/api/ /app/api
-RUN mvn -e package
+RUN mvn -DskipTests -e package
 
 # stage 2: release stage
 #FROM openjdk:8-jre-nanoserver
